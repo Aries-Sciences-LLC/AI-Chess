@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dr. Henry's AI Chess Game</title>
+    </head>
+        <style>
+            * {
+                margin: 0;
+                height: 100%;
+                overflow: hidden;
+                outline: none;
+            }
+        </style>
+    <body>
+        <div style="background-image: linear-gradient(rgb(125, 68, 107), rgb(41, 42, 62)); position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"></div>
+        <div id="divider" style="position: absolute; top: 100%; left: 45%; width: 0.25%; height: 100%; background-color: white; transition: top 0.5s linear;"></div>
+        <div id="GameScreenShot" style="background-image: url('Assets/Previews/GameScreenShot.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 10%; left: -1%; width: 100%; height: 75%; opacity: 0; transition: opacity 0.5s linear;"></div>
+        <div id="HomePageScreenShot" style="background-image: url('Assets/Previews/HomePageScreenShot.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 40%; left: 25%; width: 100%; height: 50%; opacity: 0; transition: opacity 0.5s linear;"></div>
+        <input type="button" id="playButton" style="background-image: url('Assets/WebsiteContent/PlayIcon.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 50%; left: 20%; width: 75px; height: 75px; transform: translateY(-50%); background-color: rgba(25, 25, 25, 0.85); border-radius: 50px; border: none;"></div>
+        <div id="container" style="position: absolute; top: 0%; left: 50%; width: 0%; height: 0%; transition: width 0.25s linear, height 0.5s linear;">
+            <div style="background-image: url('Assets/AppIcon/AppIcon.png'); background-size: contain; background-repeat: no-repeat; position: relative; left: 10%; width: 50%; height: 30%;"></div>
+            <h1 style="position: relative; left: 0%; height: 7vw; color: white; font-weight: 600; font-size: 3.6vw; font-family: Arial, Helvetica, sans-serif;">Dr. Henry's AI Chess Game</h1>
+            <p style="position: relative; height: 25%; color: white; font-size: 1.25vw; font-weight: 400; font-family:' Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, 'Times New Roman', serif; text-align: center; padding: 0px 20px 0px 20px; line-height: 1.75vw;">This is a cross-platform desktop app built with Electron and Java for the Mac, Windows, and Linux OSs. It is a 6-leveled chess game app where the user plays against an AI. The game is developed by Dr. Henry and coded in Java and the homepage is built with Node Js (Electron).</p>
+            <div id="systemIcon" style="position: absolute; top: 60%; left: 20%; width: 80%; height: 15%;"></div>
+            <input type="button" value="Download" id="downloadButton" style="position: relative; left: 50%; transform: translateX(-50%); width: 50%; height: 12.5%; background-color: transparent; color: white; text-align: center; font-size: 1.75vw; font-weight: 300; border: 1px solid white; border-radius: 25px; transition: backgroundColor 0.5s linear, color 0.5s linear;">
+            <a href="https://github.com/ozanmirza1/AI-Chess-Game/" target="_blank">
+                <div style="background-image: url('Assets/WebsiteContent/GitHub.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 1.5%; left: 93.5%; width: 5%; height: 5%;"></div>
+            </a>
+        </div>
+        <div id="videoContainer" style="display: none; position: absolute; width: 100%; height: 100%; background-color: rgba(25, 25, 25, 0.85); opacity: 0; transition: opacity 0.5s linear;">
+            <p style="padding-top: 40px; color: white; font-size: 1.25vw; font-weight: 600; font-family:' Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, 'Times New Roman', serif; text-align: center; text-align: center;"><u>Click anywhere to exit</u></p>
+            <input type="button" id="exitVideoContainer" style="position: absolute; top: 0%; width: 100%; height: 100%; border: none; background-color: transparent;">
+            <iframe src="https://www.youtube.com/embed/6UAOsK-y9dI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; width: 75%; height: 75%; top: 50%; left: 50%; transform: translate(-50%, -50%);"></iframe>
+        </div>
+        <script>
+            window.onload = () => {
+                if (OSNAME().trim() == "Unknown OS") {
+                    document.getElementById("downloadButton").disabled = true;
+                    document.getElementById("downloadButton").value = "OS Not Supported!"
+                } else {
+                    document.getElementById("downloadButton").disabled = false;
+                    document.getElementById("downloadButton").value += " For " + OSNAME();
+                }
+
+                document.getElementById("systemIcon").style.backgroundImage = "url('Assets/SystemIcons/" + OSNAME().split(" ").join("") + ".png')";
+                document.getElementById("systemIcon").style.backgroundSize = "contain";
+                document.getElementById("systemIcon").style.backgroundRepeat = "no-repeat";
+
+                document.getElementById("GameScreenShot").style.opacity = "1";
+                setTimeout(() => {
+                    document.getElementById("HomePageScreenShot").style.opacity = "1";
+                }, 300);
+                document.getElementById("divider").style.top = "5%";
+                setTimeout(() => {
+                    document.getElementById("container").style.width = "50%";
+                    document.getElementById("container").style.height = "100%";
+                }, 300);
+            }
+
+            document.getElementById("playButton").onclick = () => {
+                document.getElementById("videoContainer").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("videoContainer").style.opacity = "1";
+                    setTimeout(function() {
+                        // PLAY VIDEO
+                    }, 700);
+                }, 100);
+            }
+
+            document.getElementById("exitVideoContainer").onclick = () => {
+                document.getElementById("videoContainer").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("videoContainer").style.display = "none";
+                }, 500);
+            }
+
+            document.getElementById("downloadButton").onclick = () => {
+              document.getElementById("downloadButton").disabled = true
+
+                const installers = {
+                    "Mac OS": "https://github.com/ozanmirza1/AI-Chess-Game/raw/master/release-builds/AI%20Chess%20Game%20Installer.dmg",
+                    "Windows": "https://github.com/ozanmirza1/AI-Chess-Game/raw/master/release-builds/AI%20Chess%20Game%20Installer.exe",
+                    "Linux": "https://github.com/ozanmirza1/AI-Chess-Game/raw/master/release-builds/AI%20Chess%20Game%20Installer.deb",
+                };
+
+                window.open(installers[OSNAME()], "_blank");
+
+                setTimeout(() => {
+                  document.getElementById("downloadButton").disabled = false;
+                }, 500);
+            }
+
+            let OSNAME = () => {
+                var OSName="Unknown OS";
+
+                if(navigator.appName == "Microsoft Internet Explorer") return OSNAME;
+                if (navigator.appVersion.indexOf("Win")!=-1) OSName = "Windows";
+                if (navigator.appVersion.indexOf("Mac")!=-1) OSName = "Mac OS";
+                if (navigator.appVersion.indexOf("Linux")!=-1) OSName = "Linux";
+
+                return OSName
+            }
+        </script>
+    </body>
+</html>
