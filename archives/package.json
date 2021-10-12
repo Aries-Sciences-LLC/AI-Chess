@@ -13,7 +13,7 @@
     "package-linux": "electron-packager . \"Dr. Henry's Chess Game\" --overwrite --platform=linux --arch=x64 --icon=Assets/AppIcon/AppIcon.png --prune=true --out=release-builds/Linux"
   },
   "devDependencies": {
-    "electron": "^8.2.1",
+    "electron": "^11.5.0",
     "electron-builder": "latest",
     "electron-installer-debian": "^3.0.0",
     "electron-packager": "^14.2.1",
